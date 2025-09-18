@@ -1,0 +1,12 @@
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.checkbox input {
+  width: var(--icon-xs);
+  height: var(--icon-xs);
+  border: 1px solid gray;
+  border-radius: var(--radius-sm);
+}
