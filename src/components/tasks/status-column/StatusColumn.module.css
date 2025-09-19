@@ -1,9 +1,9 @@
 .statusColumnBase {
   border: 1px solid gray;
   border-radius: var(--radius-lg);
-  width: 200px;
+  width: 300px;
   height: fit-content;
-  max-height: 350px;
+  max-height: 450px;
   display: flex;
   flex-direction: column;
 }
@@ -31,7 +31,7 @@
   color: rgb(174, 134, 0);
 }
 
-.DEPLOY {
+.IN_DEPLOYMENT {
   background-color: rgb(222, 199, 255);
   color: rgb(77, 1, 152);
 }
@@ -54,11 +54,4 @@
 .isDraggingOver {
   background-color: rgb(151, 150, 209);
   color: rgb(255, 253, 253);
-}
-
-@media (min-width: 1200px) {
-  .statusColumnBase {
-    width: 300px;
-    max-height: 450px;
-  }
 }
