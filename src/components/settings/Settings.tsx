@@ -7,12 +7,23 @@ import { FormProvider, useForm } from "react-hook-form";
 import { Select } from "../common/select/Select";
 import { themeOptions } from "../../types/Themes";
 import { Button } from "../common/button/Button";
+import { useNavigate } from "react-router";
+import { logout } from "../../api/auth/Logout";
+import { AuthURLs } from "../../constants/Auth.paths";
 
 const Settings: FC<DialogProps> = ({ isOpen }) => {
+  const navigate = useNavigate();
   const methods = useForm();
 
-  const handleLogout = () => {
-    // TODO: logout
+  const handleLogout = async () => {
+    try {
+      const response = await logout();
+      if (response) {
+        navigate(AuthURLs.login);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
