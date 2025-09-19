@@ -13,6 +13,7 @@ import { AppURLs } from "./constants/App.paths";
 const Signup = lazy(() => import("./pages/signup/Signup"));
 const Login = lazy(() => import("./pages/login/Login"));
 const Home = lazy(() => import("./pages/main/home/Home"));
+const DetailTodo = lazy(() => import("./pages/main/detail/DetailTodo"));
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -33,7 +34,9 @@ export const router = createBrowserRouter(
           path={AppURLs.detailTodo}
           element={
             <Suspense fallback={<LoadingPage />}>
-              <p>Detail todo</p>
+              <Navbar>
+                <DetailTodo />
+              </Navbar>
             </Suspense>
           }
         />
