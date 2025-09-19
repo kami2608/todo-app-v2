@@ -1,8 +1,12 @@
-import { useState, type FC } from "react";
+import { type FC } from "react";
 import type { Task } from "../../../types/Task";
 import { DragDropContext, type DropResult } from "@hello-pangea/dnd";
 import StatusColumn from "../status-column/StatusColumn";
-import { statusOptions, type Status } from "../../../types/Status";
+import { Status, statusOptions } from "../../../types/Status";
+import { useQuery } from "@tanstack/react-query";
+import { queryKeys } from "../../../constants/QueryKeys.constant";
+import { getTodos } from "../../../api/todos/GetTodos";
+import { useSearchParams } from "react-router-dom";
 
 const getTasksByStatus = (status: Status, data: Task[]) => {
   return data.filter((task) => task.status === status);
@@ -24,9 +28,23 @@ const checkValidStatus = (
 };
 
 const TodoBoard: FC = () => {
-  const [data, setData] = useState<Task[]>([]);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  // TODO: get todos
+  const priorityFilter = searchParams.get("priority");
+  const assigneeFilter = searchParams.get("assignee");
+  const statusFilter = searchParams.get("status");
+
+  const { data, error } = useQuery<Task[] | undefined>({
+    queryKey: [
+      ...queryKeys.todos,
+      ...queryKeys.todosByPriority(priorityFilter),
+      ...queryKeys.todosByAssignee(assigneeFilter),
+    ],
+    queryFn: ({ signal }) =>
+      getTodos(signal, statusFilter, priorityFilter, assigneeFilter),
+  });
+
+  if (!data) return <p>{`Error: ${error?.message}. Please try again!`}</p>;
 
   const handleDragEnd = (result: DropResult) => {
     if (!result.destination) return;
@@ -45,7 +63,7 @@ const TodoBoard: FC = () => {
       taskList.splice(destinationIndex, 0, moved);
       const otherTasks = data.filter((task) => task.status !== currentStatus);
       const newData = [...otherTasks, ...taskList];
-      setData(newData);
+      // setData(newData);
       return;
     }
 
@@ -64,7 +82,7 @@ const TodoBoard: FC = () => {
         (task) => task.status !== currentStatus && task.status !== updateStatus,
       );
 
-      setData([...otherTasks, ...sourceTasks, ...destinationTasks]);
+      // setData([...otherTasks, ...sourceTasks, ...destinationTasks]);
     } else {
       alert("Invalid action!");
     }

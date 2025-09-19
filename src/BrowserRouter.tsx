@@ -10,6 +10,21 @@ import { lazy, Suspense } from "react";
 import Navbar from "./components/navbar/Navbar";
 import { AppURLs } from "./constants/App.paths";
 import AuthProvider from "./components/authentication/AuthProvider";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {},
+  },
+});
+
+declare global {
+  interface Window {
+    __TANSTACK_QUERY_CLIENT__: import("@tanstack/query-core").QueryClient;
+  }
+}
+
+window.__TANSTACK_QUERY_CLIENT__ = queryClient;
 
 const Signup = lazy(() => import("./pages/signup/Signup"));
 const Login = lazy(() => import("./pages/login/Login"));
@@ -25,11 +40,13 @@ export const router = createBrowserRouter(
         path={AppURLs.home}
         element={
           <Suspense fallback={<LoadingPage />}>
-            <AuthProvider>
-              <Navbar>
-                <Home />
-              </Navbar>
-            </AuthProvider>
+            <QueryClientProvider client={queryClient}>
+              <AuthProvider>
+                <Navbar>
+                  <Home />
+                </Navbar>
+              </AuthProvider>
+            </QueryClientProvider>
           </Suspense>
         }
       >
@@ -37,11 +54,13 @@ export const router = createBrowserRouter(
           path={AppURLs.detailTodo}
           element={
             <Suspense fallback={<LoadingPage />}>
-              <AuthProvider>
-                <Navbar>
-                  <DetailTodo />
-                </Navbar>
-              </AuthProvider>
+              <QueryClientProvider client={queryClient}>
+                <AuthProvider>
+                  <Navbar>
+                    <DetailTodo />
+                  </Navbar>
+                </AuthProvider>
+              </QueryClientProvider>
             </Suspense>
           }
         />

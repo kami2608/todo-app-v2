@@ -3,7 +3,6 @@ import { getAccessToken } from "./auth/GetAccessToken";
 
 export const axiosInstance = axios.create({
   baseURL: "",
-  allowAbsoluteUrls: false,
 });
 
 // axios instance to get new access token
