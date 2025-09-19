@@ -1,0 +1,8 @@
+.addTask {
+  padding: var(--spacing-xs);
+}
+
+.addTask button {
+  width: 100%;
+  background-color: transparent;
+}

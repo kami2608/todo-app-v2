@@ -1,0 +1,12 @@
+.statusHeader {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+  padding: var(--spacing-md);
+  border-bottom: 1px solid gray;
+}
+
+.statusHeader p {
+  font-size: var(--font-md);
+  font-weight: 500;
+}

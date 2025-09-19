@@ -1,0 +1,21 @@
+.hiddenFilter {
+  display: none;
+}
+
+.filterDialog {
+  display: block;
+  height: 75vh;
+  width: 350px;
+  border: 1px solid black;
+  border-radius: var(--radius-md);
+  background-color: white;
+}
+
+.filterForm {
+  padding: var(--spacing-lg);
+  max-height: 65vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}

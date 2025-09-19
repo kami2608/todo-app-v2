@@ -1,0 +1,41 @@
+.appLayout {
+  background-color: var(--color-primary);
+  display: flex;
+  height: 100%;
+}
+
+.nav {
+  padding: var(--spacing-xs) var(--spacing-xl);
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.098);
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+}
+
+.navTitle {
+  font-size: var(--font-lg);
+}
+
+.navBtns {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.mainLayout {
+  flex: 1;
+  padding: var(--spacing-lg);
+  padding-top: 100px;
+  width: max-content;
+  background-color: var(--color-primary);
+}
+
+.dialog {
+  position: fixed;
+  top: 10vh;
+  right: var(--spacing-sm);
+}
