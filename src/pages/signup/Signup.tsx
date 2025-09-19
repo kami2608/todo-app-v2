@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import type z from "zod";
 import { FormProvider, useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,10 +8,13 @@ import { SignupSchema } from "../../schemas/UserInfoSchema";
 import { Input } from "../../components/common/input/Input";
 import { Button } from "../../components/common/button/Button";
 import { AuthURLs } from "../../constants/Auth.paths";
+import { signup } from "../../api/auth/Signup";
+import { AppURLs } from "../../constants/App.paths";
 
 type SignupUser = z.infer<typeof SignupSchema>;
 
 const Signup: FC = () => {
+  const navigate = useNavigate();
   const methods = useForm<SignupUser>({
     mode: "onChange",
     defaultValues: {
@@ -24,8 +27,15 @@ const Signup: FC = () => {
 
   const { handleSubmit } = methods;
   const onSubmit: SubmitHandler<SignupUser> = async (data) => {
-    console.log(data);
-    // TODO: signup
+    try {
+      const isAuthenticated = await signup(data);
+      if (isAuthenticated) {
+        navigate(AppURLs.home);
+      }
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
   };
 
   return (

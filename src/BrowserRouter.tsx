@@ -9,6 +9,7 @@ import LoadingPage from "./pages/LoadingPage";
 import { lazy, Suspense } from "react";
 import Navbar from "./components/navbar/Navbar";
 import { AppURLs } from "./constants/App.paths";
+import AuthProvider from "./components/authentication/AuthProvider";
 
 const Signup = lazy(() => import("./pages/signup/Signup"));
 const Login = lazy(() => import("./pages/login/Login"));
@@ -24,9 +25,11 @@ export const router = createBrowserRouter(
         path={AppURLs.home}
         element={
           <Suspense fallback={<LoadingPage />}>
-            <Navbar>
-              <Home />
-            </Navbar>
+            <AuthProvider>
+              <Navbar>
+                <Home />
+              </Navbar>
+            </AuthProvider>
           </Suspense>
         }
       >
@@ -34,9 +37,11 @@ export const router = createBrowserRouter(
           path={AppURLs.detailTodo}
           element={
             <Suspense fallback={<LoadingPage />}>
-              <Navbar>
-                <DetailTodo />
-              </Navbar>
+              <AuthProvider>
+                <Navbar>
+                  <DetailTodo />
+                </Navbar>
+              </AuthProvider>
             </Suspense>
           }
         />
@@ -46,7 +51,9 @@ export const router = createBrowserRouter(
         path={AuthURLs.login}
         element={
           <Suspense fallback={<LoadingPage />}>
-            <Login />
+            <AuthProvider>
+              <Login />
+            </AuthProvider>
           </Suspense>
         }
       />

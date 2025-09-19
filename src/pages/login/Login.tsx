@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FormProvider, useForm, type SubmitHandler } from "react-hook-form";
 import type z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,10 +9,13 @@ import { Input } from "../../components/common/input/Input";
 import ErrorMessage from "../../components/common/errorMessage/ErrorMessage";
 import { Button } from "../../components/common/button/Button";
 import { AuthURLs } from "../../constants/Auth.paths";
+import { AppURLs } from "../../constants/App.paths";
+import { login } from "../../api/auth/Login";
 
 type LoginUser = z.infer<typeof LoginSchema>;
 
 const Login: FC = () => {
+  const navigate = useNavigate();
   const methods = useForm<LoginUser>({
     mode: "onChange",
     defaultValues: {
@@ -28,8 +31,16 @@ const Login: FC = () => {
   } = methods;
 
   const onSubmit: SubmitHandler<LoginUser> = async (data) => {
-    console.log(data);
-    // TODO: login
+    try {
+      const isAuthenticated = await login(data);
+      if (isAuthenticated) {
+        navigate(AppURLs.home);
+      }
+    } catch (error) {
+      alert(error);
+      console.log(error);
+      return;
+    }
   };
 
   return (
