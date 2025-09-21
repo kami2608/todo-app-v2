@@ -6,6 +6,10 @@ import styles from "./TaskCard.module.css";
 import clsx from "clsx";
 import { Button } from "../../common/button/Button";
 import { MdOutlineDeleteForever } from "react-icons/md";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import type { Task } from "../../../types/Task";
+import { deleteTodoById } from "../../../api/todos/DeleteTodoById";
+import { queryKeys } from "../../../constants/QueryKeys.constant";
 
 interface TaskCardProps {
   index: number;
@@ -21,6 +25,27 @@ const TaskCard: FC<TaskCardProps> = ({
   taskStatus,
 }) => {
   const navigate = useNavigate();
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation<
+    Task,
+    Error,
+    { signal: AbortSignal; id: string }
+  >({
+    mutationFn: ({ signal, id }) => deleteTodoById(id, signal),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.todos });
+    },
+  });
+
+  const handleDelete = () => {
+    const controller = new AbortController();
+    mutation.mutate({
+      signal: controller.signal,
+      id: taskId,
+    });
+  };
 
   return (
     <div>
@@ -50,8 +75,7 @@ const TaskCard: FC<TaskCardProps> = ({
               variant="icon"
               onClick={(e) => {
                 e.stopPropagation();
-                console.log(1);
-                // TODO: handle delete
+                handleDelete();
               }}
               style={{ flexShrink: "0" }}
             >

@@ -27,8 +27,12 @@ export async function deleteTodoById(id: string, signal: AbortSignal) {
     );
     console.log(response);
     alert(response.data.message);
-    return response.data.data?.todo;
+    if (!response.data.data || !response.data.success) {
+      throw new Error(response.data.error);
+    }
+    return response.data.data.todo;
   } catch (error) {
     console.log(error);
+    throw new Error("Failed while delete todo");
   }
 }
