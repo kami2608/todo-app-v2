@@ -26,9 +26,12 @@ export async function createTodo(signal: AbortSignal, newTodo: Partial<Task>) {
         signal,
       },
     );
-    alert(response.data.message);
-    if (response.data.data) return response.data.data.todo;
+    if (!response.data.success || !response.data.data) {
+      throw new Error(response.data.message);
+    }
+    return response.data.data.todo;
   } catch (error) {
     console.log(error);
+    throw new Error("Failed while create todo");
   }
 }

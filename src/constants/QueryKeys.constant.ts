@@ -1,6 +1,6 @@
 export const queryKeys = {
   todos: ["todoList"] as const,
-  details: (id: string) => [...queryKeys.todos, id] as const,
+  details: (id: string | undefined) => [...queryKeys.todos, id] as const,
   todosByStatus: (status: string[]) =>
     [...queryKeys.todos, { status: status }] as const,
   todosByPriority: (priority: string | null) =>

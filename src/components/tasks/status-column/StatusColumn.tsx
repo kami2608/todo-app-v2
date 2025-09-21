@@ -50,7 +50,7 @@ const StatusColumn: FC<StatusColumnProps> = ({ taskStatus, items }) => {
             {provided.placeholder}
           </div>
 
-          <AddTaskCard />
+          <AddTaskCard status={taskStatus.value} />
         </div>
       )}
     </Droppable>
