@@ -4,8 +4,13 @@ import { FiPlus } from "react-icons/fi";
 import styles from "./AddTaskCard.module.css";
 import TaskInput from "../task-input/TaskInput";
 import useClickOutside from "../../../../custom-hooks/UseClickOutside";
+import type { Status } from "../../../../types/Status";
 
-const AddTaskCard: FC = () => {
+interface AddTaskCardProps {
+  status: Status;
+}
+
+const AddTaskCard: FC<AddTaskCardProps> = ({ status }) => {
   const [isTaskInputOpen, setIsTaskInputOpen] = useState(false);
   const taskInputRef = useRef<HTMLDivElement | null>(null);
 
@@ -19,7 +24,7 @@ const AddTaskCard: FC = () => {
     <>
       {isTaskInputOpen && (
         <div ref={taskInputRef}>
-          <TaskInput setIsOpen={setIsTaskInputOpen} />
+          <TaskInput setIsOpen={setIsTaskInputOpen} status={status} />
         </div>
       )}
       {!isTaskInputOpen && (

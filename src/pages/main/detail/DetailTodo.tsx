@@ -8,22 +8,10 @@ import AssigneeInfo from "./assinee-info/AssigneeInfo";
 import DateInfo from "./date-info/DateInfo";
 import Description from "./description-info/Description";
 import { Priority } from "../../../types/Priority";
-import type { Task } from "../../../types/Task";
 import LoadingPage from "../../LoadingPage";
-import { Status } from "../../../types/Status";
-
-const testTask: Task = {
-  id: "cmfmopp3p000138zr7af5a0xb",
-  name: "Complete project documentation",
-  description: "Write comprehensive API documentation",
-  startDate: "2024-01-01T09:00:00.000Z",
-  endDate: "2024-01-05T17:00:00.000Z",
-  assignee: "johndoe",
-  priority: Priority.HIGH,
-  status: Status.TODO,
-  createdAt: "2025-09-16T15:05:10.737Z",
-  updatedAt: "2025-09-16T15:05:10.737Z",
-};
+import { useQuery } from "@tanstack/react-query";
+import { queryKeys } from "../../../constants/QueryKeys.constant";
+import { getTodoById } from "../../../api/todos/GetTodoById";
 
 type ContextType = { close: () => void };
 
@@ -31,9 +19,10 @@ const DetailTodo: FC = () => {
   const { taskId } = useParams();
   const { close } = useOutletContext<ContextType>();
 
-  const [task, setTask] = useState<Task>(testTask);
-
-  //TODO: get task by ID
+  const { data: task } = useQuery({
+    queryKey: queryKeys.details(taskId),
+    queryFn: ({ signal }) => getTodoById(signal, taskId),
+  });
 
   useEffect(() => {
     document.body.style.overflow = "hidden";

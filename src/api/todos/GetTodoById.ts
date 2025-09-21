@@ -17,7 +17,7 @@ interface GetTodoByIdResponse {
   details?: DetailError[];
 }
 
-export async function getTodoById(signal: AbortSignal, id: string) {
+export async function getTodoById(signal: AbortSignal, id: string | undefined) {
   try {
     const response = await axiosInstance.get<GetTodoByIdResponse>(
       `${TodoUrl}${id}`,
