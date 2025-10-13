@@ -1,0 +1,20 @@
+.input {
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  border: 1px solid gray;
+  color: var(--color-text);
+  font-size: var(--font-sm);
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  outline: 2px solid rgb(82, 84, 255);
+}
+
+.label {
+  display: block;
+  font-weight: 500;
+  padding-bottom: var(--spacing-xs);
+}

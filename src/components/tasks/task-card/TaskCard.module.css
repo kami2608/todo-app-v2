@@ -1,0 +1,68 @@
+.taskCardBase {
+  padding: var(--spacing-sm);
+  margin: var(--spacing-xs);
+  border: 1px solid gray;
+  border-radius: var(--radius-md);
+  transition-property: color;
+  transition-duration: 200ms;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.taskCardBase h3 {
+  font-size: var(--font-sm);
+  font-weight: 400;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.taskCardBase:hover {
+  outline: 2px solid rgb(40, 152, 250);
+}
+
+.TODO {
+  background-color: #e5e7eb;
+  color: #1f2937;
+}
+
+.IN_PROGRESS {
+  background-color: #bfdbfe;
+  color: #1e3a8a;
+}
+
+.IN_REVIEW {
+  background-color: #fef08a;
+  color: #713f12;
+}
+
+.DEPLOY {
+  background-color: #e9d5ff;
+  color: #581c87;
+}
+
+.IN_TESTING {
+  background-color: #fed7aa;
+  color: #7c2d12;
+}
+
+.VERIFY {
+  background-color: #99f6e4;
+  color: #134e4a;
+}
+
+.DONE {
+  background-color: #bbf7d0;
+  color: #14532d;
+}
+
+.isDragging {
+  box-shadow: var(--shadow-md);
+  opacity: 70%;
+}

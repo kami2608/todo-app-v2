@@ -1,0 +1,64 @@
+.statusColumnBase {
+  border: 1px solid gray;
+  border-radius: var(--radius-lg);
+  width: 200px;
+  height: fit-content;
+  max-height: 350px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  min-height: 10px;
+  padding: var(--spacing-md);
+}
+
+.TODO {
+  background-color: rgb(231, 229, 229);
+  color: rgb(93, 93, 93);
+}
+
+.IN_PROGRESS {
+  background-color: rgb(157, 230, 254);
+  color: rgb(4, 4, 169);
+}
+
+.IN_REVIEW {
+  background-color: rgb(255, 246, 187);
+  color: rgb(174, 134, 0);
+}
+
+.DEPLOY {
+  background-color: rgb(222, 199, 255);
+  color: rgb(77, 1, 152);
+}
+
+.IN_TESTING {
+  background-color: rgb(255, 214, 168);
+  color: rgb(184, 80, 0);
+}
+
+.VERIFY {
+  background-color: rgb(182, 245, 236);
+  color: rgb(0, 102, 92);
+}
+
+.DONE {
+  background-color: rgb(187, 255, 202);
+  color: rgb(0, 135, 45);
+}
+
+.isDraggingOver {
+  background-color: rgb(151, 150, 209);
+  color: rgb(255, 253, 253);
+}
+
+@media (min-width: 1200px) {
+  .statusColumnBase {
+    width: 300px;
+    max-height: 450px;
+  }
+}

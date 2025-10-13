@@ -1,0 +1,15 @@
+.hiddenSettings {
+  display: none;
+}
+
+.settingsDialog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  height: 75vh;
+  width: 350px;
+  border: 1px solid black;
+  border-radius: var(--radius-md);
+  background-color: white;
+  padding: var(--spacing-md);
+}
