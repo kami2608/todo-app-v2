@@ -1,0 +1,10 @@
+.taskInput {
+  border-top: 1px solid gray;
+  padding: var(--spacing-sm);
+}
+
+.btn {
+  margin-top: var(--spacing-md);
+  display: flex;
+  justify-content: space-between;
+}

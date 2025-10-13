@@ -1,0 +1,5 @@
+.info,
+.editAssignee {
+  align-items: center;
+  gap: var(--spacing-md);
+}

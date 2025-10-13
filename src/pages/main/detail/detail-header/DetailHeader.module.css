@@ -1,0 +1,38 @@
+.detailHeader {
+  position: relative;
+  border-bottom: 1px solid gray;
+  width: 100%;
+}
+
+.title,
+.editInput {
+  align-items: center;
+  padding: var(--spacing-md);
+  padding-right: calc(var(--spacing-md) * 4);
+  gap: var(--spacing-sm);
+}
+
+.detailTitle {
+  font-size: var(--font-md);
+  font-weight: bold;
+  word-break: break-all;
+}
+
+.input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid var(--color-text);
+  padding-bottom: var(--spacing-xs);
+  font-size: var(--font-md);
+  font-weight: bold;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.closeBtn {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-md);
+}

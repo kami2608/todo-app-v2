@@ -1,0 +1,105 @@
+import { useEffect, useState, type FC } from "react";
+import type { Task } from "../../../types/Task";
+import { DragDropContext, type DropResult } from "@hello-pangea/dnd";
+import StatusColumn from "../status-column/StatusColumn";
+import { statusOptions, type Status } from "../../../types/Status";
+import { getTodos } from "../../../api/todos/GetTodos";
+
+const getTasksByStatus = (status: Status, data: Task[]) => {
+  return data.filter((task) => task.status === status);
+};
+
+const checkValidStatus = (
+  currentStatus: Status,
+  updateStatus: Status,
+): boolean => {
+  const currentIndex = statusOptions.findIndex(
+    (status) => status.value === currentStatus,
+  );
+  const updateIndex = statusOptions.findIndex(
+    (status) => status.value === updateStatus,
+  );
+
+  if (currentIndex === -1 || updateIndex === -1) return false;
+  return updateIndex > currentIndex;
+};
+
+const TodoBoard: FC = () => {
+  const [data, setData] = useState<Task[]>([]);
+  // console.log(data);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const fetchTodos = async () => {
+      try {
+        const todos = await getTodos(controller.signal);
+        if (!controller.signal.aborted && todos) {
+          console.log(todos);
+          setData(todos.data.todos);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchTodos();
+    return () => controller.abort();
+  }, []);
+
+  const handleDragEnd = (result: DropResult) => {
+    if (!result.destination) return;
+
+    const currentStatus = result.source.droppableId as Status;
+    const updateStatus = result.destination.droppableId as Status;
+
+    const currentIndex = result.source.index;
+    const destinationIndex = result.destination.index;
+
+    const draggedTask = data.find((task) => task.id === result.draggableId);
+
+    if (currentStatus === updateStatus) {
+      const taskList = getTasksByStatus(currentStatus, data);
+      const [moved] = taskList.splice(currentIndex, 1);
+      taskList.splice(destinationIndex, 0, moved);
+      const otherTasks = data.filter((task) => task.status !== currentStatus);
+      const newData = [...otherTasks, ...taskList];
+      setData(newData);
+      return;
+    }
+
+    if (checkValidStatus(currentStatus, updateStatus) && draggedTask) {
+      const sourceTasks = data.filter((task) => task.status === currentStatus);
+      const destinationTasks = data.filter(
+        (task) => task.status === updateStatus,
+      );
+
+      sourceTasks.splice(currentIndex, 1);
+      draggedTask.status = updateStatus;
+
+      destinationTasks.splice(destinationIndex, 0, draggedTask);
+
+      const otherTasks = data.filter(
+        (task) => task.status !== currentStatus && task.status !== updateStatus,
+      );
+
+      setData([...otherTasks, ...sourceTasks, ...destinationTasks]);
+    } else {
+      alert("Invalid action!");
+    }
+  };
+
+  return (
+    <DragDropContext onDragEnd={handleDragEnd}>
+      <div style={{ display: "flex", gap: "var(--spacing-md)" }}>
+        {statusOptions.map((status) => (
+          <StatusColumn
+            key={status.value}
+            taskStatus={status}
+            items={getTasksByStatus(status.value, data)}
+          />
+        ))}
+      </div>
+    </DragDropContext>
+  );
+};
+
+export default TodoBoard;
